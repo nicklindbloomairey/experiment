@@ -10,9 +10,9 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 var jsonParser = bodyParser.json();
 
 var pool = mysql.createPool({
-        host: 'localhost',
+        host: 'nick.lindbloomairey.com',
         user: 'root',
-        password: 'tlekimb',
+        password: '',
         database: 'users'
 });
 
