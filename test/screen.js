@@ -57,6 +57,7 @@ var update = function() {
 }
 
 
+// XXX this needs a comment? jmairey
 window.setInterval(function () {draw(); update();}, 1000/fps);
 
 //add the canvas to the body section
