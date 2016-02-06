@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html>
+<head>
+  <title>multiplayer</title>
+
+  <link rel="stylesheet" type="text/css" href="css/PokerMultiPlayer.css"> 
+
+  <script type="text/javascript">
+    var exports; // hack to silence an error message when loading cardDeck.js in the browser..
+                 // cardDeck.js is also loaded on node server side and needs exports..
+  </script>
+
+  <script type="text/javascript" src="server/cardDeck.js">
+  <!--  //a shared file between client and server 
+        //-->
+  </script>
+
+  <script type="text/javascript" src="js/authentication.js">
+    window.onload =authenticationInit;
+  </script>
+
+  <script type="text/javascript" src="js/pokerMultiPlayer.js">
+  </script>
+
+
+</head>
+
+<!-- this is a comment... -->
+
+<body>
+<!--  <form id="login" action="/test_login" method="post"> -->
+  <form id="login" action="/login" method="post"> 
+    <div>
+      <label>Username:</label>
+      <input type="text" name="username"/>
+    </div>
+    <div>
+      <label>Password:</label>
+      <input type="password" name="password"/>
+    </div>
+    <div>
+      <input type="submit" value="Log In"/>
+    </div>
+  </form>
+  <div>
+    <button id="logOutButton">Log Out</button>
+    message: <input id="messageText" type="text" />
+    <button id="getButton">get message</button>
+    <button id="setButton">send message</button>
+  </div>
+
+
+  <div id="player0Cards" class="player0Cards">
+    <img id="card0" src="/cards/back-blue-75-3.png" />
+    <img id="card1" src="/cards/back-blue-75-3.png" />
+    <img id="card2" src="/cards/back-blue-75-3.png" />
+    <img id="card3" src="/cards/back-blue-75-3.png" />
+    <img id="card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player0msg">
+      player 0 message
+    </h3>
+  </div>
+  <div id="playButtons">
+    <form>
+      <input id= "playButton0" type="button" value="Join Next Hand" onclick="joinGame(this);" />
+      <input id= "playButton1" type="button" value="Discard Selected Card" onclick="discardCurrentCard(this);" />
+      <input id= "playButton2" type="button" value="Done Discard" onclick="doneDiscard(this);" />
+      <input id= "playButton3" type="button" value="Fold" onclick="foldHand(this);" />
+      <input id= "playButton4" type="button" value="Call" onclick="callGame(this);" />
+    </form>
+  </div>
+
+  <h2 id="gameDirections"> 
+    welcome to the server hosted game, :-)
+  </h2>
+
+  <div id="player1Cards" class="otherPlayerCards">
+    <img id="player1card0" src="/cards/back-blue-75-3.png" />
+    <img id="player1card1" src="/cards/back-blue-75-3.png" />
+    <img id="player1card2" src="/cards/back-blue-75-3.png" />
+    <img id="player1card3" src="/cards/back-blue-75-3.png" />
+    <img id="player1card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player1msg" class=otherPlayerMsg>
+      player 1 message
+    </h3>
+
+  </div>
+
+  <div id="player2Cards" class="otherPlayerCards">
+    <img id="player2card0" src="/cards/back-blue-75-3.png" />
+    <img id="player2card1" src="/cards/back-blue-75-3.png" />
+    <img id="player2card2" src="/cards/back-blue-75-3.png" />
+    <img id="player2card3" src="/cards/back-blue-75-3.png" />
+    <img id="player2card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player2msg" class=otherPlayerMsg>
+      player 2 message
+    </h3>
+
+  </div>
+
+  <div id="player3Cards" class="otherPlayerCards">
+    <img id="player3card0" src="/cards/back-blue-75-3.png" />
+    <img id="player3card1" src="/cards/back-blue-75-3.png" />
+    <img id="player3card2" src="/cards/back-blue-75-3.png" />
+    <img id="player3card3" src="/cards/back-blue-75-3.png" />
+    <img id="player3card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player3msg" class=otherPlayerMsg>
+      player 3 message
+    </h3>
+
+  </div>
+
+  <div id="player4Cards" class="otherPlayerCards">
+    <img id="player4card0" src="/cards/back-blue-75-3.png" />
+    <img id="player4card1" src="/cards/back-blue-75-3.png" />
+    <img id="player4card2" src="/cards/back-blue-75-3.png" />
+    <img id="player4card3" src="/cards/back-blue-75-3.png" />
+    <img id="player4card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player4msg" class=otherPlayerMsg>
+      player 4 message
+    </h3>
+
+  </div>
+
+  <div id="player5Cards" class="otherPlayerCards">
+
+
+    <img id="player5card0" src="/cards/back-blue-75-3.png" />
+    <img id="player5card1" src="/cards/back-blue-75-3.png" />
+    <img id="player5card2" src="/cards/back-blue-75-3.png" />
+    <img id="player5card3" src="/cards/back-blue-75-3.png" />
+    <img id="player5card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player5msg" class=otherPlayerMsg>
+      player 5 message
+    </h3>
+
+  </div>
+
+</body>
+</html>

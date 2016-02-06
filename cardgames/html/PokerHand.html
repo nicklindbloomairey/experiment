@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html>
+<head>
+  <title>singleplayer</title>
+
+  <link rel="stylesheet" type="text/css" href="../css/PokerHand.css">
+
+  <script type="text/javascript">
+    var exports; // hack to silence an error message when loading cardDeck.js in the browser..
+                 // cardDeck.js is also loaded on node server side and needs exports..
+  </script>
+
+  <script type="text/javascript" src="../server/cardDeck.js">
+  <!--  //a shared file between client and server 
+        //-->
+  </script>
+
+  <script type="text/javascript" src="../js/authentication.js">
+  </script>
+
+  <script type="text/javascript" src="../js/pokerHand.js">
+  </script>
+
+</head>
+
+<!-- this is a comment... -->
+
+<body>
+<!--  <form id="login" action="/test_login" method="post"> -->
+  <form id="login" action="/login" method="post"> 
+    <div>
+      <label>Username:</label>
+      <input type="text" name="username"/>
+    </div>
+    <div>
+      <label>Password:</label>
+      <input type="password" name="password"/>
+    </div>
+    <div>
+      <input type="submit" value="Log In"/>
+    </div>
+  </form>
+  <div>
+    <button id="logOutButton">Log Out</button>
+    message: <input id="messageText" type="text" />
+    <button id="getButton">get message</button>
+    <button id="setButton">send message</button>
+  </div>
+
+  <h2 id="gameDirections"> 
+    play single player or login to join a server hosted game, :-)
+  </h2>
+
+  <div id="player0Cards" class="player0Cards">
+    <img id="card0" src="/cards/back-blue-75-3.png" onclick="handleCard0Click();" />
+    <img id="card1" src="/cards/back-blue-75-3.png" onclick="handleCard1Click();" />
+    <img id="card2" src="/cards/back-blue-75-3.png" onclick="handleCard2Click();" />
+    <img id="card3" src="/cards/back-blue-75-3.png" onclick="handleCard3Click();" />
+    <img id="card4" src="/cards/back-blue-75-3.png" onclick="handleCard4Click();" />
+
+  </div>
+
+  <div id="movementButtons">
+    <form>
+      <input type="button" value="Move Card Left " onclick="moveCardLeft(gCurCard,10);" />
+      <input type="button" value="Move Card Right" onclick="moveCardRight(gCurCard,10);" />
+      <input type="button" value="Move Card Up   " onclick="moveCardUp(gCurCard,10);" />
+      <input type="button" value="Move Card Down " onclick="moveCardDown(gCurCard,10);" />
+    </form>
+  </div>
+
+  <div id="playButtons">
+    <form>
+      <input type="button" value="Start: Ante and Deal Hands" onclick="anteAndDealHands(this);" />
+      <input type="button" value="Discard Selected Card" onclick="discardCurrentCard(this);" />
+      <input type="button" value="Done Discard" onclick="doneDiscard(this);" />
+      <input type="button" value="Fold" onclick="foldHand(this);" />
+      <input type="button" value="Call" onclick="callGame(this);" />
+    </form>
+  </div>
+
+  <div id="player1Cards" class="player1Cards">
+
+    <h3 id="player0msg">
+      and another hand (yep, allowing it to be seen for now)
+    </h3>
+
+    <img id="player1card0" src="/cards/back-blue-75-3.png" />
+    <img id="player1card1" src="/cards/back-blue-75-3.png" />
+    <img id="player1card2" src="/cards/back-blue-75-3.png" />
+    <img id="player1card3" src="/cards/back-blue-75-3.png" />
+    <img id="player1card4" src="/cards/back-blue-75-3.png" />
+
+    <h3 id="player0Result">
+      your hand analysis 
+    </h3>
+
+    <h3 id="computerResult">
+      computer hand analysis 
+    </h3>
+
+  </div>
+
+  <div id="fourthButtons">
+      <button id = "cardButton1" onclick="redCardBack(this);"  >
+          <img src="/cards/back-red-75-3.png" />
+      </button>
+  </div>
+
+  <!--
+  <div>
+      <canvas id="pokerCanvas" width="320" height="240">
+      </canvas>
+  </div>
+  -->
+
+</body>
+</html>
