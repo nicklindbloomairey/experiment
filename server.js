@@ -88,6 +88,14 @@ app.get('/login', function(req, res) {
         res.sendFile(__dirname + '/login.html');
 });
 
+app.get('/test', function(req, res) {
+        res.sendFile(__dirname + '/test/canvas.html');
+});
+
+app.get('/test/screen.js', function(req, res) {
+        res.sendFile(__dirname + '/test/screen.js');
+});
+
 app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/login');
@@ -98,4 +106,4 @@ app.get('/profile', ensurelogin.ensureLoggedIn(), function (req, res) {
 });
 
 //START THE SERVER
-app.listen(8080);
+app.listen(80);
