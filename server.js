@@ -9,10 +9,18 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var jsonParser = bodyParser.json();
 
+//
+//
+//ATTENTION
+//  |
+//  V
+//the mysql server does not let you connect from anywhere that isn't localhost so you won't be able to connect to the database
 var pool = mysql.createPool({
-        host: 'nick.lindbloomairey.com',
+        connectionLimit: 10,
+        host: 'localhost',
+        port: 3306,
         user: 'root',
-        password: '',
+        password: 'nick',
         database: 'users'
 });
 
@@ -21,11 +29,15 @@ var pool = mysql.createPool({
 //goal is to call 'cb' passing in the user info
 passport.use(new Strategy(function(username, password, cb) {
         pool.getConnection(function(err, connection) {
-                connection.query('SELECT hash, salt FROM password WHERE username=?', username, function(err, row) {
+                if (err) { console.log(err)}
+                connection.query("SELECT hash, salt FROM password WHERE username='" + username + "'", function(err, row) {
                         if (md5(password + row[0].salt) === row[0].hash) {
-                                connection.query('SELECT * FROM info WHERE username=?', username, function(err, inforow) {
+                                connection.query("SELECT * FROM info WHERE username='" + username + "'", function(err, inforow) {
                                         cb(null, inforow[0]);
                                 });
+                        }
+                        else {
+                                cb(null, false, { message: "incorrect password" }); 
                         }
                 }); 
         });
@@ -37,7 +49,7 @@ passport.serializeUser(function(user, cb) {
 
 passport.deserializeUser(function(id, cb) {
         pool.getConnection(function(err, connection) {
-                connection.query('SELECT * FROM info WHERE id=?', id, function(err, row) {
+                connection.query("SELECT * FROM info WHERE id='" +id + "'", function(err, row) {
                         cb(null, row[0]);
                 });
         });
