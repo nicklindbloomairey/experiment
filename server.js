@@ -10,14 +10,13 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var jsonParser = bodyParser.json();
 
-var PORT = 8080;
+var PORT = 80;
 
 //database connection
 //here i am using a json file as our database
 //mysql-server.js uses a mysql server with several tables set up
-
 var db = {
-       users: [] 
+   users: [] 
 };
 
 fs.readFile(__dirname + '/db/users.json', 'utf8', function(err, data) {
@@ -30,39 +29,39 @@ fs.readFile(__dirname + '/db/users.json', 'utf8', function(err, data) {
 
 //this is the login strategy
 passport.use(new Strategy(function(username, password, cb) {
-        console.log('trying to log in with user: ' + username + ' and pass: ' + password);
+    console.log('trying to log in with user: ' + username + ' and pass: ' + password);
 
-        //find the user
-        var user = undefined;
-        for (var i = 0; i<db.users.length; i++) {
-                if (username === db.users[i].username) {
-                        user = db.users[i];
-                }
+    //find the user
+    var user = undefined;
+    for (var i = 0; i<db.users.length; i++) {
+        if (username === db.users[i].username) {
+            user = db.users[i];
         }
+    }
 
-        //check the password
-        if (user === undefined) {
-                cb(null, undefined); //fail if the user does not exist
+    //check the password
+    if (user === undefined) {
+        cb(null, undefined); //fail if the user does not exist
+    } else {
+        if (password === user.password) {
+            cb(null, user); //pass if the password works for the username given
         } else {
-                if (password === user.password) {
-                        cb(null, user); //pass if the password works for the username given
-                } else {
-                        cb(null, undefined); //fail is the password fails for the username given
-                }       
-        }
+            cb(null, undefined); //fail is the password fails for the username given
+        }       
+    }
 }));
 
 //given the user object, return the id
 passport.serializeUser(function(user, cb) {
-        console.log('serializeuser called by user: ')
-        console.log(user)
-        cb(null, user.id);
+    console.log('serializeuser called by user: ')
+    console.log(user)
+    cb(null, user.id);
 });
 
 //given the id, return the user object
 passport.deserializeUser(function(id, cb) {
-        console.log('deserialiseuser called by id: ' + id)
-        cb(null, db.users[id-1]);
+    console.log('deserialiseuser called by id: ' + id)
+    cb(null, db.users[id-1]);
 });
 
 //create express instance
@@ -79,61 +78,59 @@ app.use(jsonParser);
 
 //our home page, these lines are in every node server
 app.get('/', function(req, res) {
-        res.sendFile(__dirname + '/html/index.html');
+    res.sendFile(__dirname + '/html/index.html');
 });
 
 app.post('/register', jsonParser, function(req, res) {
-        /* 
-         * we could use a salt and a hash for security purposes but not right now
-         * var salt = csprng(160, 32);
-         * var hash = md5(req.body.password + salt);
-         */
-        req.body.username
-        var newUser = {
-                username: req.body.username,
-                password: req.body.password,
-                id: db.users.length+1
-        }
-        db.users.push(newUser);
+    var newUser = {
+        username: req.body.username,
+        password: req.body.password,
+        id: db.users.length+1
+    }
+    db.users.push(newUser);
 
-        res.sendFile(__dirname + '/html/registerworked.html');
+    res.sendFile(__dirname + '/html/registerworked.html');
 });
 
 app.get('/register', function(req, res) {
-        res.sendFile(__dirname + '/html/register.html');
+    res.sendFile(__dirname + '/html/register.html');
 });
 
 //the POST /login gets called by a form with username and password fields that are checked in the passport stategy
 app.post('/login', passport.authenticate('local', {successRedirect: '/profile',failureRedirect: '/login' }));
 
 app.get('/login', function(req, res) {
-        res.sendFile(__dirname + '/html/login.html');
+    res.sendFile(__dirname + '/html/login.html');
 });
 
 app.get('/animation', function(req, res) {
-        res.sendFile(__dirname + '/html/animation.html');
+    res.sendFile(__dirname + '/html/animation.html');
 });
 
 app.get('/animation.js', function(req, res) {
-        res.sendFile(__dirname + '/js/animation.js');
+    res.sendFile(__dirname + '/js/animation.js');
 });
 
 app.get('/rogue', function(req, res) {
-        res.sendFile(__dirname + '/html/rogue.html');
+    res.sendFile(__dirname + '/html/rogue.html');
 });
 
 app.get('/rogue.js', function(req, res) {
-        res.sendFile(__dirname + '/js/rogue.js');
+    res.sendFile(__dirname + '/js/rogue.js');
+});
+
+app.get('/vimrc', function(req, res) {
+    res.sendFile(__dirname + '/html/vimrc.html');
 });
 
 app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/login');
+    req.logout();
+    res.redirect('/login');
 });
 
 //ensure login will check if you are logged in and if not will redirect to /login
 app.get('/profile', ensurelogin.ensureLoggedIn(), function (req, res) {
-        res.json(req.user);
+    res.json(req.user);
 });
 
 //START THE SERVER
