@@ -5,126 +5,243 @@
     </head>
     
     <body>
-        <h1>My Vimr</h1>
+        <h1>My Vimrc</h1>
         <a href="/">Back to Home</a>
         <p>
             """""""""""""""""""""""""""""""""
+            <br>
             "     Nick LA's ./vimrc         "
+            <br>
             """""""""""""""""""""""""""""""""
+            <br>
             "
+            <br>
             " 2016-03-05
+            <br>
             "
+            <br>
             " Sets how many lines of history VIM has to remember
+            <br>
             set history=500
+            <br>
 
+            <br>
             " Set to auto read when a file is changed from the outside
+            <br>
             set autoread
+            <br>
 
+            <br>
             " With a map leader it's possible to do extra key combinations
+            <br>
             " like <leader>w saves the current file
+            <br>
             let mapleader = ","
+            <br>
             let g:mapleader = ","
+            <br>
 
+            <br>
             " Fast saving and exiting
+            <br>
             nmap <leader>w :w!<cr>
+            <br>
             nmap <leader>q :q!<cr>
+            <br>
 
+            <br>
             " Set 7 lines to the cursor - when moving vertically using j/k
+            <br>
             set so=7
+            <br>
 
+            <br>
             " Turn on the WiLd menu
+            <br>
             set wildmenu
+            <br>
 
+            <br>
             " Ignore compiled files
+            <br>
             set wildignore=*.class
+            <br>
 
+            <br>
             "toggle highlight line and column with ,c
+            <br>
             :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+            <br>
 
+            <br>
             "Always show current position
+            <br>
             set ruler
+            <br>
 
+            <br>
             " Height of the command bar
+            <br>
             set cmdheight=1
+            <br>
 
+            <br>
             " Ignore case when searching
+            <br>
             set ignorecase
+            <br>
             set smartcase
+            <br>
 
+            <br>
             " Highlight search results
+            <br>
             set hlsearch
+            <br>
 
+            <br>
             " Don't redraw while executing macros (good performance config)
+            <br>
             set lazyredraw 
+            <br>
 
+            <br>
             " Show matching brackets when text indicator is over them
+            <br>
             set showmatch 
+            <br>
 
+            <br>
             " No annoying sound on errors
+            <br>
             set noerrorbells
+            <br>
             set novisualbell
+            <br>
 
+            <br>
             " Add a bit extra margin to the left
+            <br>
             set foldcolumn=1
+            <br>
 
+            <br>
             " Enable syntax highlighting
+            <br>
             syntax enable 
+            <br>
 
+            <br>
             " set my colorscheme
+            <br>
             colorscheme desert
+            <br>
             set background=dark "sets the type of syntax highlighting to use
+            <br>
 
+            <br>
             " Set extra options when running in GUI mode
+            <br>
             " mainly just rip out the ugly menu bars that just take up space
+            <br>
             if has("gui_running")
+            <br>
                 set guioptions-=T
+            <br>
                 set guioptions-=m
+            <br>
                 set guioptions-=e
+            <br>
                 set t_Co=256
+            <br>
             endif
+            <br>
 
+            <br>
             " turn backup off because having one backup in the same folder is pointless
+            <br>
             " use git or the cloud if you want backups
+            <br>
             set nobackup
+            <br>
             set nowb
+            <br>
             set noswapfile
+            <br>
 
+            <br>
             " Use spaces instead of tabs
+            <br>
             set expandtab
+            <br>
 
+            <br>
             " Be smart when using tabs ;)
+            <br>
             set smarttab
+            <br>
 
+            <br>
             " 1 tab == 4 spaces
+            <br>
             set shiftwidth=4
+            <br>
             set tabstop=4
+            <br>
 
+            <br>
             set ai "Auto indent
+            <br>
             set si "Smart indent
+            <br>
 
+            <br>
             " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+            <br>
             map <space> /
+            <br>
             map <c-space> ?
+            <br>
 
+            <br>
             " Disable highlight when <leader><cr> is pressed
+            <br>
             map <silent> <leader><cr> :noh<cr>
+            <br>
 
+            <br>
             " Useful mappings for managing tabs
+            <br>
             map <tab> :tabnext<cr>
+            <br>
             map <leader>e :tabedit
+            <br>
 
+            <br>
             " Switch CWD to the directory of the open buffer
+            <br>
             map <leader>cd :cd %:p:h<cr>:pwd<cr>
+            <br>
 
+            <br>
             " Always show the status line
+            <br>
             set laststatus=2
+            <br>
 
+            <br>
             " Format the status line
+            <br>
             " shows current file, write state  CWD: currentworking directory and the line #
+            <br>
             set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+            <br>
 
+            <br>
             " Remap VIM 0 to first non-blank character
+            <br>
             map 0 ^
+            <br>
         </p>
             
     </body>
