@@ -40,19 +40,20 @@ var draw = function() {
 }
 
 var onKeyDown = function(event) {
-	if (event.keyCode === 37 && tile.playerX > 0) {
+	if (event.keyCode === 65 && tile.playerX > 0) {
 		tile.playerX--;	
 	}	
-	else if (event.keyCode === 38 && tile.playerY > 0) {
+	else if (event.keyCode === 87 && tile.playerY > 0) {
 		tile.playerY--;	
 	}	
-	else if (event.keyCode === 39 && tile.playerX < screen.width/tile.ppt - 1) {
+	else if (event.keyCode === 68 && tile.playerX < screen.width/tile.ppt - 1) {
 		tile.playerX++;	
 	}	
-	else if (event.keyCode === 40 && tile.playerY < (screen.height/tile.ppt)-1) {
+	else if (event.keyCode === 83 && tile.playerY < (screen.height/tile.ppt)-1) {
 		tile.playerY++;	
 	}	
 	draw();
+        console.log(event.keyCode);
 }
 
 window.addEventListener('keydown', onKeyDown, false);

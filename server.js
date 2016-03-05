@@ -1,58 +1,68 @@
 var express = require('express');
-var mysql = require('mysql');
+//var mysql = require('mysql');
+var fs = require('fs');
 var passport = require('passport');
-var ensurelogin = require('connect-ensure-login');
-var Strategy = require('passport-local').Strategy;
-var csprng = require('csprng');
-var md5 = require('md5');
+var ensurelogin = require('connect-ensure-login'); //allows for logged in only pages
+var Strategy = require('passport-local').Strategy; //the authentication strategy is defined locally
+//var csprng = require('csprng'); //don't need this for a json database
+//var md5 = require('md5');
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var jsonParser = bodyParser.json();
 
-//
-//
-//ATTENTION
-//  |
-//  V
-//the mysql server does not let you connect from anywhere that isn't localhost so you won't be able to connect to the database
-var pool = mysql.createPool({
-        connectionLimit: 10,
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: 'nick',
-        database: 'users'
+var PORT = 8080;
+
+//database connection
+//here i am using a json file as our database
+//mysql-server.js uses a mysql server with several tables set up
+
+var db = {
+       users: [] 
+};
+
+fs.readFile(__dirname + '/db/users.json', 'utf8', function(err, data) {
+    console.log('trying to open ',__dirname+'/db/users.json');
+    db.users = JSON.parse(data).users;
+        console.log('SAVED ');
+        console.log(db.users);
+        console.log('FROM DB');
 });
 
-//this is the login strategy.
-//'username' and 'password' are user-entered
-//goal is to call 'cb' passing in the user info
+//this is the login strategy
 passport.use(new Strategy(function(username, password, cb) {
-        pool.getConnection(function(err, connection) {
-                if (err) { console.log(err)}
-                connection.query("SELECT hash, salt FROM password WHERE username='" + username + "'", function(err, row) {
-                        if (md5(password + row[0].salt) === row[0].hash) {
-                                connection.query("SELECT * FROM info WHERE username='" + username + "'", function(err, inforow) {
-                                        cb(null, inforow[0]);
-                                });
-                        }
-                        else {
-                                cb(null, false, { message: "incorrect password" }); 
-                        }
-                }); 
-        });
+        console.log('trying to log in with user: ' + username + ' and pass: ' + password);
+
+        //find the user
+        var user = undefined;
+        for (var i = 0; i<db.users.length; i++) {
+                if (username === db.users[i].username) {
+                        user = db.users[i];
+                }
+        }
+
+        //check the password
+        if (user === undefined) {
+                cb(null, undefined); //fail if the user does not exist
+        } else {
+                if (password === user.password) {
+                        cb(null, user); //pass if the password works for the username given
+                } else {
+                        cb(null, undefined); //fail is the password fails for the username given
+                }       
+        }
 }));
 
+//given the user object, return the id
 passport.serializeUser(function(user, cb) {
+        console.log('serializeuser called by user: ')
+        console.log(user)
         cb(null, user.id);
 });
 
+//given the id, return the user object
 passport.deserializeUser(function(id, cb) {
-        pool.getConnection(function(err, connection) {
-                connection.query("SELECT * FROM info WHERE id='" +id + "'", function(err, row) {
-                        cb(null, row[0]);
-                });
-        });
+        console.log('deserialiseuser called by id: ' + id)
+        cb(null, db.users[id-1]);
 });
 
 //create express instance
@@ -67,45 +77,53 @@ app.use(jsonParser);
 
 //ROUTES
 
+//our home page, these lines are in every node server
 app.get('/', function(req, res) {
-        res.sendFile(__dirname + '/index.html');
+        res.sendFile(__dirname + '/html/index.html');
 });
 
 app.post('/register', jsonParser, function(req, res) {
-        var salt = csprng(160, 32);
-        var hash = md5(req.body.password + salt);
-        var numberofusers;
+        /* 
+         * we could use a salt and a hash for security purposes but not right now
+         * var salt = csprng(160, 32);
+         * var hash = md5(req.body.password + salt);
+         */
+        req.body.username
+        var newUser = {
+                username: req.body.username,
+                password: req.body.password,
+                id: db.users.length+1
+        }
+        db.users.push(newUser);
 
-        pool.getConnection(function(err, connection) {
-                var info = {username: req.body.username, somedata: req.body.somedata};
-                var password = {username: req.body.username, salt: salt, hash: hash};
-                connection.query('INSERT INTO info SET ?', info, function(err, row) {});
-                connection.query('INSERT INTO password SET ?', password, function(err, row) {});
-                connection.release();
-        });
-
-        res.sendFile(__dirname + '/registerworked.html');
+        res.sendFile(__dirname + '/html/registerworked.html');
 });
 
 app.get('/register', function(req, res) {
-        res.sendFile(__dirname + '/register.html');
+        res.sendFile(__dirname + '/html/register.html');
 });
 
-app.post('/login', passport.authenticate('local', {failureRedirect: '/login' }), function(req, res) {
-        //if the authentication worked this gets run
-        res.redirect('/profile');
-});
+//the POST /login gets called by a form with username and password fields that are checked in the passport stategy
+app.post('/login', passport.authenticate('local', {successRedirect: '/profile',failureRedirect: '/login' }));
 
 app.get('/login', function(req, res) {
-        res.sendFile(__dirname + '/login.html');
+        res.sendFile(__dirname + '/html/login.html');
 });
 
-app.get('/test', function(req, res) {
-        res.sendFile(__dirname + '/test/canvas.html');
+app.get('/animation', function(req, res) {
+        res.sendFile(__dirname + '/html/animation.html');
 });
 
-app.get('/test/screen.js', function(req, res) {
-        res.sendFile(__dirname + '/test/screen.js');
+app.get('/animation.js', function(req, res) {
+        res.sendFile(__dirname + '/js/animation.js');
+});
+
+app.get('/rogue', function(req, res) {
+        res.sendFile(__dirname + '/html/rogue.html');
+});
+
+app.get('/rogue.js', function(req, res) {
+        res.sendFile(__dirname + '/js/rogue.js');
 });
 
 app.get('/logout', function(req, res) {
@@ -113,9 +131,11 @@ app.get('/logout', function(req, res) {
         res.redirect('/login');
 });
 
+//ensure login will check if you are logged in and if not will redirect to /login
 app.get('/profile', ensurelogin.ensureLoggedIn(), function (req, res) {
         res.json(req.user);
 });
 
 //START THE SERVER
-app.listen(80);
+app.listen(PORT);
+console.log('server running on port: ' + PORT)
