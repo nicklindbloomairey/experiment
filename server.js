@@ -119,6 +119,14 @@ app.get('/rogue.js', function(req, res) {
     res.sendFile(__dirname + '/js/rogue.js');
 });
 
+app.get('/tictactoe', function(req, res) {
+    res.sendFile(__dirname + '/html/tictactoe.html');
+});
+
+app.get('/tictactoe.js', function(req, res) {
+    res.sendFile(__dirname + '/js/tictactoe.js');
+});
+
 app.get('/vimrc', function(req, res) {
     res.sendFile(__dirname + '/html/vimrc.html');
 });
