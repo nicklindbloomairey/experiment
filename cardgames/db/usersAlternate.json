@@ -1,0 +1,123 @@
+{
+  "playersDBTable": {
+    "dealer": "this is a comment...",
+    "nick": {
+      "password" : "pw1",
+      "id": 1,
+      "wallet": 100,
+      "playing": -1 
+    },
+    "sam": {
+      "password" : "pw2",
+      "id": 2,
+      "wallet": 100,
+      "playing": -1 
+    },
+    "john": {
+      "password" : "pw3",
+      "id": 3,
+      "wallet": 100,
+      "playing": -1
+    },
+    "mj": {
+      "password" : "pw4",
+      "id": 4,
+      "wallet": 100,
+      "playing": -1
+    },
+    "taylor": {
+      "password" : "pw5",
+      "id": 5,
+      "wallet": 100,
+      "playing": -1
+    },
+    "jordan": {
+      "password" : "pw6",
+      "id": 6,
+      "wallet": 100,
+      "playing": -1
+    }
+  },
+
+  "handsDBTable": {
+    "0": "this is a comment...",
+    "1" : {                  
+      "result": {
+        "handType": -1,
+        "handRank": -1,
+        "handRank2": -1,
+        "card0": -1,
+        "card1": -1,
+        "card2": -1,
+        "card3": -1,
+        "card4": -1
+      },
+      "hand" : []
+    },
+    "2" : {                  
+      "result": {
+        "handType": -1,
+        "handRank": -1,
+        "handRank2": -1,
+        "card0": -1,
+        "card1": -1,
+        "card2": -1,
+        "card3": -1,
+        "card4": -1
+      },
+      "hand" : []
+    },
+    "3" : {                  
+      "result": {
+        "handType": -1,
+        "handRank": -1,
+        "handRank2": -1,
+        "card0": -1,
+        "card1": -1,
+        "card2": -1,
+        "card3": -1,
+        "card4": -1
+      },
+      "hand" : []
+    },
+    "4" : {                  
+      "result": {
+        "handType": -1,
+        "handRank": -1,
+        "handRank2": -1,
+        "card0": -1,
+        "card1": -1,
+        "card2": -1,
+        "card3": -1,
+        "card4": -1
+      },
+      "hand" : []
+    },
+    "5" : {                  
+      "result": {
+        "handType": -1,
+        "handRank": -1,
+        "handRank2": -1,
+        "card0": -1,
+        "card1": -1,
+        "card2": -1,
+        "card3": -1,
+        "card4": -1
+      },
+      "hand" : []
+    },
+    "6" : {                  
+      "result": {
+        "handType": -1,
+        "handRank": -1,
+        "handRank2": -1,
+        "card0": -1,
+        "card1": -1,
+        "card2": -1,
+        "card3": -1,
+        "card4": -1
+      },
+      "hand" : []
+    }
+  }
+}
