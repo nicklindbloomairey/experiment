@@ -1,0 +1,12 @@
+body {
+    background-color: AliceBlue;
+}
+#header {
+    color: gray;
+    text-align: center;
+}
+#footer {
+    background-color: LightSeaGreen;
+    border-style: double;
+    text-align: center;
+}

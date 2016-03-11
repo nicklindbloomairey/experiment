@@ -77,6 +77,9 @@ app.use(urlencodedParser);
 app.use(jsonParser);
 app.use(favicon(__dirname + '/favicon.ico'));
 
+//serve the city keeper game as static for easier development
+app.use('/citykeeper', express.static('citykeeper'));
+
 //ROUTES
 
 //our home page, these lines are in every node server
