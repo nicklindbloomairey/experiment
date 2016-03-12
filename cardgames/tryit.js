@@ -44,3 +44,8 @@ var player = gGameState.playersDBTable["john"];
 console.log('john = ',player);
 console.log("john's hand ",gGameState.handsDBTable[player.id]);
 
+console.log('\n>>stringify playersDBTable');
+console.log(JSON.stringify(gGameState.playersDBTable,null,2));
+console.log('\n>>stringify handsDBTable');
+console.log(JSON.stringify(gGameState.handsDBTable,null,2));
+
