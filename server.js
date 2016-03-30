@@ -142,6 +142,28 @@ app.get('/animation', function(req, res) {
     res.sendFile(__dirname + '/html/animation.html');
 });
 
+app.get('/text', function(req, res) {
+    res.sendFile(__dirname + '/html/text.html');
+});
+
+app.get('/text.js', function(req, res) {
+    res.sendFile(__dirname + '/js/text.js');
+});
+
+app.post('/textsave', function(req, res) {
+    console.log(req);
+});
+
+app.post('/text', function(req, res) {
+    var content = {
+        'body': 'from server'
+    }
+
+    var json = JSON.stringify(content);
+    res.write(json);
+    res.end();
+});
+
 app.get('/animation.js', function(req, res) {
     res.sendFile(__dirname + '/js/animation.js');
 });
