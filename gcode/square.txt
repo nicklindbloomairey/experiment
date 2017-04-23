@@ -1,0 +1,10 @@
+0 Y0 Z0 ; go home
+G0 Z0.25 ; move to first layer height (0.25mm in this case)
+G1 X100 E1 F1800 ; move from 0,0 to 100,0 at a feedrate of 30mm/sec (1800mm/min) and extrude (E1)
+G1 Y100 E1
+G1 X0 Y100 E1 ; Y100 is redundant, but legal
+G1 Y0
+
+G0 Z0.5 ; go to next layer ...
+; ....
+M30 ; end of program
