@@ -78,8 +78,13 @@ app.use(jsonParser);
 
 //our home page, these lines are in every node server
 app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/html/frontpage.html');
+});
+
+/*app.get('/', function(req, res) {
     res.sendFile(__dirname + '/html/index.html');
 });
+*/
 
 app.post('/register', jsonParser, function(req, res) {
     var newUser = {
@@ -110,6 +115,14 @@ app.get('/animation', function(req, res) {
 app.get('/animation.js', function(req, res) {
     res.sendFile(__dirname + '/js/animation.js');
 });
+
+app.get('/frontpage', function(req, res) {
+    res.sendFile(__dirname + '/html/frontpage.html');
+});
+app.get('/frontpage.css', function(req, res) {
+    res.sendFile(__dirname + '/css/style.css');
+});
+
 
 app.get('/rogue', function(req, res) {
     res.sendFile(__dirname + '/html/rogue.html');
