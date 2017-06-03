@@ -1,0 +1,17 @@
+body {
+    background-color: AliceBlue;
+}
+#header {
+    color: gray;
+    text-align: center;
+}
+#menu-bar {
+    padding: 10px;
+    border: dotted;
+}
+#footer {
+    background-color: LightSeaGreen;
+    border-style: double;
+    text-align: center;
+    margin-top: 40px;
+}

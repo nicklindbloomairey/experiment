@@ -1,4 +1,5 @@
 var express = require('express');
+var favicon = require('serve-favicon');
 //var mysql = require('mysql');
 var fs = require('fs');
 var passport = require('passport');
@@ -44,6 +45,7 @@ passport.use(new Strategy(function(username, password, cb) {
         cb(null, undefined); //fail if the user does not exist
     } else {
         if (password === user.password) {
+            user.online = true;
             cb(null, user); //pass if the password works for the username given
         } else {
             cb(null, undefined); //fail is the password fails for the username given
@@ -73,6 +75,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(urlencodedParser);
 app.use(jsonParser);
+app.use(favicon(__dirname + '/favicon.ico'));
+
+//serve the city keeper game as static for easier development
+app.use('/citykeeper', express.static('citykeeper'));
 
 //ROUTES
 
@@ -86,11 +92,16 @@ app.get('/', function(req, res) {
 });
 */
 
+app.get('/favicon.ico', function(req, res) {
+    res.sendFile(__dirname + '/favicon.ico');
+});
+
 app.post('/register', jsonParser, function(req, res) {
     var newUser = {
         username: req.body.username,
         password: req.body.password,
-        id: db.users.length+1
+        id: db.users.length+1,
+        online: false
     }
     db.users.push(newUser);
 
@@ -108,8 +119,54 @@ app.get('/login', function(req, res) {
     res.sendFile(__dirname + '/html/login.html');
 });
 
+app.get('/lobby', function(req, res) {
+    res.sendFile(__dirname + '/html/lobby.html');
+});
+
+app.post('/lobby', function(req, res) {
+    var userList = {
+        'online': []
+    };
+    for (var i = 0; i<db.users.length; i++) {
+        if (db.users[i].online) {
+            userList.online.push({
+                'username': db.users[i].username
+            });
+        }
+    }
+    var json = JSON.stringify(userList);
+    res.write(json);
+    res.end();
+});
+
+app.get('/lobby.js', function(req, res) {
+    res.sendFile(__dirname + '/js/lobby.js');
+});
+
 app.get('/animation', function(req, res) {
     res.sendFile(__dirname + '/html/animation.html');
+});
+
+app.get('/text', function(req, res) {
+    res.sendFile(__dirname + '/html/text.html');
+});
+
+app.get('/text.js', function(req, res) {
+    res.sendFile(__dirname + '/js/text.js');
+});
+
+app.post('/textsave', function(req, res) {
+    console.log(req);
+});
+
+app.post('/text', function(req, res) {
+    var content = {
+        'body': 'from server'
+    }
+
+    var json = JSON.stringify(content);
+    res.write(json);
+    res.end();
 });
 
 app.get('/animation.js', function(req, res) {
@@ -145,7 +202,9 @@ app.get('/vimrc', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
+    req.user.online=false;
     req.logout();
+
     res.redirect('/login');
 });
 

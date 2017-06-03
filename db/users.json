@@ -3,25 +3,29 @@
                 {
                         "username": "nick",
                         "password": "n1ck",
-                        "id": 1
+                        "id": 1,
+                        "online": false
                 },
 
                 {
                         "username": "sam",
                         "password": "s@m",
-                        "id": 2
+                        "id": 2,
+                        "online": false
                 },
 
                 {
                         "username": "alex",
                         "password": "al3x",
-                        "id": 3
+                        "id": 3,
+                        "online": false
                 },
 
                 {
                         "username": "john",
                         "password": "j0hn",
-                        "id": 4
+                        "id": 4,
+                        "online": false
                 }
         ]
 }
