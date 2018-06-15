@@ -84,8 +84,13 @@ app.use('/citykeeper', express.static('citykeeper'));
 
 //our home page, these lines are in every node server
 app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/html/frontpage.html');
+});
+
+/*app.get('/', function(req, res) {
     res.sendFile(__dirname + '/html/index.html');
 });
+*/
 
 app.get('/favicon.ico', function(req, res) {
     res.sendFile(__dirname + '/favicon.ico');
@@ -167,6 +172,14 @@ app.post('/text', function(req, res) {
 app.get('/animation.js', function(req, res) {
     res.sendFile(__dirname + '/js/animation.js');
 });
+
+app.get('/frontpage', function(req, res) {
+    res.sendFile(__dirname + '/html/frontpage.html');
+});
+app.get('/frontpage.css', function(req, res) {
+    res.sendFile(__dirname + '/css/style.css');
+});
+
 
 app.get('/rogue', function(req, res) {
     res.sendFile(__dirname + '/html/rogue.html');

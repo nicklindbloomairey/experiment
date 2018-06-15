@@ -1,0 +1,22 @@
+body {
+        background-color: white;
+}
+.website_title {
+        color: red;
+        text-align: center;
+}
+.description {
+        color: black;
+        text-align: center;
+}
+.product_list {
+        width: 100%;
+}
+.product {
+        color: blue;
+        text-align: center;
+        display: block;
+        float: left;
+        width: 20%;
+        height: 100%;
+}
